@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="JDAMIL BNL01">
+<title>JDAMIL BNL01</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1a1a2e}
+:root{--ac:#185FA5;--ac2:#0C447C;--bg:#fff;--bg2:#f8f9fb;--bg3:#f0f2f5;--bd:#e2e6ea;--bd2:#d0d5dd;--tx:#1a1a2e;--tx2:#6b7280;--tx3:#9ca3af;--r:10px;--rl:14px}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1d23;--bg2:#22262f;--bg3:#14171d;--bd:#2d3340;--bd2:#3a4055;--tx:#e8eaf0;--tx2:#9ba3b4;--tx3:#6b7585}}
+.app{display:flex;height:100vh;background:var(--bg3)}
+.sb{width:220px;background:var(--bg);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s}
+.logo{padding:20px 16px 16px;border-bottom:1px solid var(--bd)}
+.logo-b{display:inline-block;background:#E6F1FB;color:#185FA5;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.8px;margin-bottom:6px}
+.logo-t{font-size:14px;font-weight:700;color:var(--tx)}
+.logo-s{font-size:10px;color:var(--tx2);margin-top:2px}
+.nav{padding:12px 8px;flex:1;overflow-y:auto}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--tx2);transition:all .15s;margin-bottom:2px;user-select:none}
+.ni:hover{background:var(--bg2);color:var(--tx)}
+.ni.on{background:#E6F1FB;color:#185FA5;font-weight:600}
+.ni i{font-size:17px}
+.ns{font-size:9px;font-weight:700;color:var(--tx3);padding:10px 10px 4px;letter-spacing:1px;text-transform:uppercase}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tb-title{font-size:16px;font-weight:600;color:var(--tx);flex:1}
+.btn{padding:7px 14px;border-radius:var(--r);border:1px solid var(--bd2);background:var(--bg);color:var(--tx);font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit;text-decoration:none}
+.btn:hover{background:var(--bg2)}
+.btn.pri{background:var(--ac);color:#fff;border-color:var(--ac)}
+.btn.pri:hover{background:var(--ac2)}
+.btn.del{color:#A32D2D;border-color:transparent;background:transparent}
+.btn.del:hover{background:#FCEBEB}
+.btn.gc{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4}
+.btn.gc:hover{background:#B5D4F4}
+.content{flex:1;overflow-y:auto;padding:20px}
+.panel{display:none}.panel.on{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:700px){.g2,.g4{grid-template-columns:1fr}.sb{position:fixed;top:0;left:0;height:100vh;z-index:100;transform:translateX(-100%)}.sb.open{transform:translateX(0);box-shadow:4px 0 20px rgba(0,0,0,.2)}.hb{display:flex!important}.content{padding:14px}.topbar{padding:10px 14px}}
+.card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;margin-bottom:16px}
+.ct{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.met{background:var(--bg2);border-radius:var(--r);padding:14px;text-align:center}
+.mv{font-size:26px;font-weight:700;color:var(--ac)}.ml{font-size:11px;color:var(--tx2);margin-top:4px}
+.tr{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.tr:last-child{border-bottom:none}
+.chk{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--bd2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.chk.dn{background:var(--ac);border-color:var(--ac)}
+.tn{flex:1;font-size:13px;color:var(--tx)}.tn.dn{text-decoration:line-through;color:var(--tx3)}
+.pb{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.pf{height:100%;background:var(--ac);border-radius:3px;transition:width .3s}
+.badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;white-space:nowrap}
+.badge.alta{background:#FCEBEB;color:#A32D2D}.badge.media{background:#FAEEDA;color:#854F0B}.badge.baja{background:#EAF3DE;color:#3B6D11}
+.badge.google{background:#E6F1FB;color:#185FA5}.badge.outlook{background:#EEEDFE;color:#3C3489}.badge.zimbra{background:#E1F5EE;color:#0F6E56}.badge.gcal{background:#E6F1FB;color:#185FA5}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
+.cdn{font-size:10px;color:var(--tx2);text-align:center;padding:4px 0;font-weight:600}
+.cd{font-size:12px;text-align:center;padding:7px 2px;border-radius:7px;cursor:pointer;color:var(--tx2);transition:all .15s;position:relative}
+.cd:hover{background:var(--bg2);color:var(--tx)}
+.cd.tod{background:var(--ac);color:#fff;font-weight:700}
+.cd.sel{outline:2px solid var(--ac);outline-offset:1px}
+.cd.hev::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#E24B4A}
+.cd.tod.hev::after{background:#fff}
+.er{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.er:last-child{border-bottom:none}
+.ed{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.et{font-size:13px;color:var(--tx);font-weight:500}
+.em{font-size:11px;color:var(--tx2);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ar{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.ar:last-child{border-bottom:none}
+.tog{width:38px;height:22px;border-radius:11px;background:var(--bd2);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0}
+.tog.on{background:var(--ac)}
+.tog::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tog.on::after{left:19px}
+.cr{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--bd)}
+.cr:last-child{border-bottom:none}
+.ci{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fld{margin-bottom:14px}
+.fld label{font-size:12px;color:var(--tx2);display:block;margin-bottom:5px;font-weight:500}
+.fld input,.fld select,.fld textarea{width:100%;padding:9px 11px;border-radius:var(--r);border:1px solid var(--bd2);background:var(--bg);color:var(--tx);font-size:13px;font-family:inherit;outline:none;transition:border .15s}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--ac)}
+.fld textarea{resize:vertical;min-height:72px}
+.mw{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
+.mw.open{display:flex}
+.modal{background:var(--bg);border-radius:var(--rl);padding:24px;width:440px;max-width:100%;border:1px solid var(--bd);max-height:90vh;overflow-y:auto}
+.mh{font-size:15px;font-weight:600;color:var(--tx);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.notif{position:fixed;bottom:24px;right:24px;background:var(--ac);color:#fff;padding:11px 18px;border-radius:var(--r);font-size:13px;transform:translateY(70px);opacity:0;transition:all .3s;z-index:300;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.notif.show{transform:translateY(0);opacity:1}
+.notif-ev{position:fixed;bottom:24px;right:24px;background:#1a1a2e;color:#fff;padding:14px 16px;border-radius:var(--rl);font-size:13px;transform:translateY(80px);opacity:0;transition:all .3s;z-index:301;display:flex;flex-direction:column;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,.3);min-width:280px;max-width:320px}
+.notif-ev.show{transform:translateY(0);opacity:1}
+.lb{background:var(--bg2);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.lr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px;gap:12px}
+.lr span:first-child{color:var(--tx2);flex-shrink:0}
+.lr span:last-child{color:var(--tx);font-weight:500;text-align:right;word-break:break-all}
+.es{text-align:center;padding:28px 0;color:var(--tx3);font-size:13px}
+.pr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.pr:last-child{border-bottom:none}
+input[type=range]{accent-color:var(--ac);cursor:pointer}
+.hb{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--tx)}
+/* SETUP */
+.sw{position:fixed;inset:0;background:rgba(10,22,40,.94);display:flex;align-items:center;justify-content:center;z-index:500;padding:20px}
+.sb2{background:var(--bg);border-radius:var(--rl);padding:30px;width:420px;max-width:100%;border:1px solid var(--bd)}
+.sl{font-size:11px;font-weight:700;color:var(--ac);letter-spacing:.8px;margin-bottom:6px}
+.st2{font-size:18px;font-weight:700;color:var(--tx);margin-bottom:6px}
+.ss{font-size:13px;color:var(--tx2);margin-bottom:22px;line-height:1.6}
+.sa{border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.sa.google{background:#E6F1FB}.sa.outlook{background:#EEEDFE}.sa.zimbra{background:#E1F5EE}
+.sai{font-size:20px;flex-shrink:0}
+.san{font-size:13px;font-weight:600}.sae{font-size:11px;margin-top:2px;opacity:.8}
+.sa.google .san,.sa.google .sae{color:#185FA5}
+.sa.outlook .san,.sa.outlook .sae{color:#3C3489}
+.sa.zimbra .san,.sa.zimbra .sae{color:#0F6E56}
+.step{display:none}.step.on{display:block}
+.dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--bd2);transition:background .2s}
+.dot.on{background:var(--ac)}
+/* GCAL BANNER */
+.gcal-bar{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.gcal-bar.connected{background:#E1F5EE;border-color:#9FE1CB}
+.gcal-events-section{border-top:2px solid #185FA5;margin-top:8px;padding-top:12px}
+.gcal-event-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.gcal-event-item:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+
+<!-- SETUP WIZARD -->
+<div class="sw" id="sw" style="display:none">
+  <div class="sb2">
+    <div class="sl">JDAMIL BNL01</div>
+    <div class="step on" id="step-google">
+      <div class="st2">Configurar Gmail</div>
+      <div class="ss">Ingresa tu contraseña una única vez. Quedará guardada solo en este dispositivo.</div>
+      <div class="sa google"><div class="sai"><i class="ti ti-brand-google"></i></div><div><div class="san">Google Calendar / Gmail</div><div class="sae">mbogotdurn@gmail.com</div></div></div>
+      <div class="fld"><label>Contraseña de Gmail</label><input type="password" id="pw-google" placeholder="Ingresa tu contraseña" /></div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:18px"><i class="ti ti-lock" style="font-size:12px"></i> Solo se guarda en este dispositivo.</div>
+      <div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+      <button class="btn pri" style="width:100%;justify-content:center;padding:11px" onclick="swNext('google')">Siguiente <i class="ti ti-arrow-right"></i></button>
+    </div>
+    <div class="step" id="step-outlook">
+      <div class="st2">Configurar Outlook</div>
+      <div class="ss">Ingresa tu contraseña de Outlook / Hotmail.</div>
+      <div class="sa outlook"><div class="sai"><i class="ti ti-brand-office"></i></div><div><div class="san">Microsoft Outlook</div><div class="sae">miguel_bogota@hotmail.com</div></div></div>
+      <div class="fld"><label>Contraseña de Outlook</label><input type="password" id="pw-outlook" placeholder="Ingresa tu contraseña" /></div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:18px"><i class="ti ti-lock" style="font-size:12px"></i> Solo se guarda en este dispositivo.</div>
+      <div class="dots"><div class="dot"></div><div class="dot on"></div><div class="dot"></div></div>
+      <div style="display:flex;gap:8px"><button class="btn" style="flex:1;justify-content:center" onclick="swBack('google')"><i class="ti ti-arrow-left"></i> Atrás</button><button class="btn pri" style="flex:2;justify-content:center;padding:11px" onclick="swNext('outlook')">Siguiente <i class="ti ti-arrow-right"></i></button></div>
+    </div>
+    <div class="step" id="step-zimbra">
+      <div class="st2">Configurar Zimbra</div>
+      <div class="ss">Ingresa tu contraseña institucional de la Armada Nacional.</div>
+      <div class="sa zimbra"><div class="sai"><i class="ti ti-mail"></i></div><div><div class="san">Zimbra — Armada Nacional</div><div class="sae">miguel.bogota@armada.mil.co</div></div></div>
+      <div class="fld"><label>Contraseña institucional</label><input type="password" id="pw-zimbra" placeholder="Ingresa tu contraseña" /></div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:18px"><i class="ti ti-lock" style="font-size:12px"></i> Solo se guarda en este dispositivo.</div>
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot on"></div></div>
+      <div style="display:flex;gap:8px"><button class="btn" style="flex:1;justify-content:center" onclick="swBack('outlook')"><i class="ti ti-arrow-left"></i> Atrás</button><button class="btn pri" style="flex:2;justify-content:center;padding:11px" onclick="swFinish()"><i class="ti ti-check"></i> Finalizar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app">
+  <aside class="sb" id="sb">
+    <div class="logo">
+      <div class="logo-b">ARMADA · BNL01</div>
+      <div class="logo-t">JDAMIL BNL01</div>
+      <div class="logo-s">Gestión de tiempo y agenda</div>
+    </div>
+    <nav class="nav">
+      <div class="ns">Principal</div>
+      <div class="ni on" onclick="showP('dashboard',this)"><i class="ti ti-layout-dashboard"></i> Dashboard</div>
+      <div class="ni" onclick="showP('tareas',this)"><i class="ti ti-checkbox"></i> Tareas</div>
+      <div class="ni" onclick="showP('calendario',this)"><i class="ti ti-calendar"></i> Calendario</div>
+      <div class="ni" onclick="showP('alarmas',this)"><i class="ti ti-bell"></i> Alarmas</div>
+      <div class="ns">Cuentas</div>
+      <div class="ni" onclick="showP('conexiones',this)"><i class="ti ti-plug-connected"></i> Conexiones</div>
+      <div class="ni" onclick="showP('config',this)"><i class="ti ti-settings"></i> Configuración</div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="hb" id="hb" onclick="document.getElementById('sb').classList.toggle('open')"><i class="ti ti-menu-2" style="font-size:22px"></i></button>
+      <span class="tb-title" id="tbt">Dashboard</span>
+      <button class="btn gc" onclick="gcSignIn()" id="gc-topbtn"><i class="ti ti-brand-google"></i> <span id="gc-topbtn-txt">Conectar Google Calendar</span></button>
+      <button class="btn" onclick="openM('alarma')"><i class="ti ti-bell-plus"></i> Nueva alarma</button>
+      <button class="btn pri" onclick="openM('tarea')"><i class="ti ti-plus"></i> Nueva tarea</button>
+    </div>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel on" id="panel-dashboard">
+        <!-- Google Calendar Banner -->
+        <div class="gcal-bar" id="gcal-banner">
+          <i class="ti ti-brand-google" style="font-size:20px;color:#185FA5;flex-shrink:0"></i>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:#185FA5">Google Calendar</div>
+            <div style="font-size:11px;color:#185FA5;opacity:.8" id="gcal-banner-txt">No conectado — haz clic en "Conectar Google Calendar" arriba</div>
+          </div>
+          <button class="btn gc" style="font-size:12px;padding:6px 12px" onclick="gcSignIn()" id="gcal-connect-btn"><i class="ti ti-plug-connected"></i> Conectar</button>
+        </div>
+        <div class="g4">
+          <div class="met"><div class="mv" id="m1">0</div><div class="ml">Tareas totales</div></div>
+          <div class="met"><div class="mv" id="m2">0</div><div class="ml">Pendientes</div></div>
+          <div class="met"><div class="mv" id="m3">0</div><div class="ml">Completadas</div></div>
+          <div class="met"><div class="mv" id="m4">0</div><div class="ml">Eventos Google</div></div>
+        </div>
+        <div class="g2">
+          <div class="card"><div class="ct"><i class="ti ti-checkbox"></i> Tareas recientes</div><div id="dt"></div></div>
+          <div class="card">
+            <div class="ct"><i class="ti ti-brand-google" style="color:#185FA5"></i> Eventos de Google Calendar <button class="btn gc" style="margin-left:auto;padding:4px 10px;font-size:11px" onclick="loadGCalEvents()"><i class="ti ti-refresh"></i></button></div>
+            <div id="gcal-events-list"><div class="es"><i class="ti ti-brand-google" style="font-size:28px;display:block;margin-bottom:8px;color:var(--tx3)"></i>Conecta Google Calendar para ver tus eventos</div></div>
+          </div>
+        </div>
+        <div class="card"><div class="ct"><i class="ti ti-chart-bar"></i> Progreso de tareas</div><div id="dp"></div></div>
+      </div>
+
+      <!-- TAREAS -->
+      <div class="panel" id="panel-tareas">
+        <div class="card">
+          <div class="ct"><i class="ti ti-list-check"></i> Mis tareas <button class="btn pri" style="margin-left:auto;padding:6px 12px" onclick="openM('tarea')"><i class="ti ti-plus"></i> Agregar</button></div>
+          <div id="tl"></div>
+        </div>
+      </div>
+
+      <!-- CALENDARIO -->
+      <div class="panel" id="panel-calendario">
+        <div class="g2">
+          <div class="card">
+            <div class="ct"><i class="ti ti-calendar"></i> <span id="cml">Junio 2026</span>
+              <div style="margin-left:auto;display:flex;gap:6px">
+                <button class="btn" onclick="chM(-1)" style="padding:5px 9px"><i class="ti ti-chevron-left"></i></button>
+                <button class="btn" onclick="chM(1)" style="padding:5px 9px"><i class="ti ti-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="cg" id="cg"></div>
+          </div>
+          <div class="card">
+            <div class="ct"><i class="ti ti-clock"></i> Eventos del día <button class="btn" style="margin-left:auto;padding:5px 9px" onclick="openM('evento')"><i class="ti ti-plus"></i></button></div>
+            <div id="dev"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ct"><i class="ti ti-brand-google" style="color:#185FA5"></i> Eventos de Google Calendar (próximos 30 días)</div>
+          <div id="gcal-cal-list"><div class="es">Conecta Google Calendar para ver tus eventos aquí</div></div>
+        </div>
+        <div class="card"><div class="ct"><i class="ti ti-calendar-stats"></i> Eventos locales</div><div id="aev"></div></div>
+      </div>
+
+      <!-- ALARMAS -->
+      <div class="panel" id="panel-alarmas">
+        <div class="card">
+          <div class="ct"><i class="ti ti-bell"></i> Alarmas y recordatorios <button class="btn pri" style="margin-left:auto;padding:6px 12px" onclick="openM('alarma')"><i class="ti ti-plus"></i> Agregar</button></div>
+          <div id="al"></div>
+        </div>
+      </div>
+
+      <!-- CONEXIONES -->
+      <div class="panel" id="panel-conexiones">
+        <div class="card">
+          <div class="ct"><i class="ti ti-plug-connected"></i> Cuentas configuradas</div>
+          <div class="cr">
+            <div class="ci" style="background:#E6F1FB"><i class="ti ti-brand-google" style="color:#185FA5"></i></div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--tx)">Google Calendar / Gmail</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">mbogotdurn@gmail.com</div><div style="font-size:11px;margin-top:3px;font-weight:500" id="gc-conn-status">⚪ No conectado</div></div>
+            <button class="btn gc" onclick="gcSignIn()" id="gc-conn-btn"><i class="ti ti-plug-connected"></i> Conectar</button>
+          </div>
+          <div class="cr">
+            <div class="ci" style="background:#EEEDFE"><i class="ti ti-brand-office" style="color:#3C3489"></i></div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--tx)">Microsoft Outlook</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">miguel_bogota@hotmail.com</div><div style="font-size:11px;color:#0F6E56;margin-top:3px;font-weight:500">✓ Configurado</div></div>
+            <button class="btn" style="font-size:12px" onclick="openReset('outlook')"><i class="ti ti-key"></i> Contraseña</button>
+          </div>
+          <div class="cr">
+            <div class="ci" style="background:#E1F5EE"><i class="ti ti-mail" style="color:#0F6E56"></i></div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--tx)">Zimbra — Armada Nacional</div><div style="font-size:11px;color:var(--tx2);margin-top:2px">miguel.bogota@armada.mil.co</div><div style="font-size:11px;color:#0F6E56;margin-top:3px;font-weight:500">✓ Configurado</div></div>
+            <button class="btn" style="font-size:12px" onclick="openReset('zimbra')"><i class="ti ti-key"></i> Contraseña</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ct"><i class="ti ti-refresh"></i> Sincronización</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0">
+            <span style="font-size:13px;color:var(--tx2);flex:1">Última sincronización: <strong id="ls" style="color:var(--tx)">Nunca</strong></span>
+            <button class="btn pri" onclick="sync()"><i class="ti ti-refresh"></i> Sincronizar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div class="panel" id="panel-config">
+        <div class="card">
+          <div class="ct"><i class="ti ti-user"></i> Datos personales</div>
+          <div class="fld"><label>Nombre completo</label><input type="text" id="cfg-n" placeholder="Tu nombre completo" /></div>
+          <div class="fld"><label>Cargo / Unidad</label><input type="text" id="cfg-c" placeholder="Ej: Jefatura Nacional de Operaciones" /></div>
+          <div class="fld"><label>Zona horaria</label><select><option>America/Bogota (UTC-5)</option><option>America/New_York</option><option>UTC</option></select></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--bd)">
+            <span style="font-size:13px;color:var(--tx);flex:1">Notificaciones activas</span>
+            <button class="tog on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div style="margin-top:14px"><button class="btn pri" onclick="saveCfg()"><i class="ti ti-device-floppy"></i> Guardar</button></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODALES -->
+<div class="mw" id="mw-tarea">
+  <div class="modal">
+    <div class="mh">Nueva tarea <button class="btn" onclick="closeM('tarea')" style="padding:5px 9px"><i class="ti ti-x"></i></button></div>
+    <div class="fld"><label>Nombre *</label><input type="text" id="t-n" placeholder="Ej: Preparar informe mensual" /></div>
+    <div class="fld"><label>Descripción</label><textarea id="t-d" placeholder="Detalles..."></textarea></div>
+    <div class="g2">
+      <div class="fld"><label>Prioridad</label><select id="t-p"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="baja">Baja</option></select></div>
+      <div class="fld"><label>Fecha límite</label><input type="date" id="t-f" /></div>
+    </div>
+    <div class="fld"><label>Progreso: <strong id="t-pv">0</strong>%</label><input type="range" min="0" max="100" step="5" value="0" id="t-pr" oninput="document.getElementById('t-pv').textContent=this.value" /></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button class="btn" onclick="closeM('tarea')">Cancelar</button>
+      <button class="btn pri" onclick="addT()"><i class="ti ti-check"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="mw" id="mw-alarma">
+  <div class="modal">
+    <div class="mh">Nueva alarma <button class="btn" onclick="closeM('alarma')" style="padding:5px 9px"><i class="ti ti-x"></i></button></div>
+    <div class="fld"><label>Título *</label><input type="text" id="a-t" placeholder="Ej: Reunión de coordinación" /></div>
+    <div class="g2">
+      <div class="fld"><label>Fecha</label><input type="date" id="a-f" /></div>
+      <div class="fld"><label>Hora</label><input type="time" id="a-h" /></div>
+    </div>
+    <div class="fld"><label>Repetición</label><select id="a-r"><option value="no">No repetir</option><option value="diario">Cada día</option><option value="semana">Cada semana</option><option value="mes">Cada mes</option></select></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button class="btn" onclick="closeM('alarma')">Cancelar</button>
+      <button class="btn pri" onclick="addA()"><i class="ti ti-bell"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="mw" id="mw-evento">
+  <div class="modal">
+    <div class="mh">Nuevo evento <button class="btn" onclick="closeM('evento')" style="padding:5px 9px"><i class="ti ti-x"></i></button></div>
+    <div class="fld"><label>Título *</label><input type="text" id="e-t" placeholder="Ej: Reunión con el jefe de sección" /></div>
+    <div class="g2">
+      <div class="fld"><label>Fecha</label><input type="date" id="e-f" /></div>
+      <div class="fld"><label>Hora</label><input type="time" id="e-h" /></div>
+    </div>
+    <div class="fld"><label>Calendario</label><select id="e-c"><option value="google">Gmail — mbogotdurn@gmail.com</option><option value="outlook">Outlook — miguel_bogota@hotmail.com</option><option value="zimbra">Zimbra — miguel.bogota@armada.mil.co</option></select></div>
+    <div class="fld"><label>Notas</label><textarea id="e-n" placeholder="Información adicional..."></textarea></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button class="btn" onclick="closeM('evento')">Cancelar</button>
+      <button class="btn pri" onclick="addE()"><i class="ti ti-check"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="mw" id="mw-reset">
+  <div class="modal">
+    <div class="mh"><span id="rst-t">Cambiar contraseña</span> <button class="btn" onclick="closeM('reset')" style="padding:5px 9px"><i class="ti ti-x"></i></button></div>
+    <div id="rst-box" style="margin-bottom:14px"></div>
+    <div class="fld"><label>Nueva contraseña</label><input type="password" id="rst-pw" placeholder="Ingresa la nueva contraseña" /></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="closeM('reset')">Cancelar</button>
+      <button class="btn pri" onclick="saveRst()"><i class="ti ti-check"></i> Actualizar</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"><i class="ti ti-check-circle"></i> <span id="nm"></span></div>
+<div class="notif-ev" id="nev" style="position:fixed">
+  <div style="display:flex;align-items:center;gap:8px">
+    <i class="ti ti-calendar-check" style="color:#4ade80;font-size:16px"></i>
+    <span id="nev-msg" style="font-weight:500;font-size:13px"></span>
+  </div>
+  <a id="nev-link" href="#" target="_blank" class="btn gc" style="justify-content:center;width:100%;padding:9px">
+    <i class="ti ti-brand-google"></i> Abrir en Google Calendar
+  </a>
+</div>
+
+<script>
+// ── CONFIGURACIÓN GOOGLE ─────────────────────────────────────
+const CLIENT_ID='449134737611-iotniv7olrmtbqjr2itmsp42bh7kgtha.apps.googleusercontent.com';
+const SCOPES='https://www.googleapis.com/auth/calendar.readonly';
+let gcToken=null;
+let gcEvents=[];
+
+function gcSignIn(){
+  const client=google.accounts.oauth2.initTokenClient({
+    client_id:CLIENT_ID,
+    scope:SCOPES,
+    callback:(resp)=>{
+      if(resp.access_token){
+        gcToken=resp.access_token;
+        updateGcStatus(true);
+        loadGCalEvents();
+      }
+    }
+  });
+  client.requestAccessToken();
+}
+
+function updateGcStatus(connected){
+  const s=document.getElementById('gc-conn-status');
+  const b=document.getElementById('gc-conn-btn');
+  const bb=document.getElementById('gcal-connect-btn');
+  const tb=document.getElementById('gc-topbtn-txt');
+  const ban=document.getElementById('gcal-banner');
+  const bant=document.getElementById('gcal-banner-txt');
+  if(connected){
+    if(s){s.textContent='✓ Conectado';s.style.color='#0F6E56';}
+    if(b){b.innerHTML='<i class="ti ti-check"></i> Conectado';b.disabled=true;}
+    if(bb){bb.style.display='none';}
+    if(tb)tb.textContent='Google Calendar conectado ✓';
+    if(ban)ban.classList.add('connected');
+    if(bant)bant.textContent='Conectado como mbogotdurn@gmail.com';
+    document.getElementById('gc-topbtn').innerHTML='<i class="ti ti-check"></i> Google Calendar ✓';
+    document.getElementById('gc-topbtn').disabled=true;
+  }
+}
+
+function loadGCalEvents(){
+  if(!gcToken){notify('Primero conecta Google Calendar');return;}
+  const now=new Date().toISOString();
+  const future=new Date(Date.now()+30*24*60*60*1000).toISOString();
+  fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${now}&timeMax=${future}&singleEvents=true&orderBy=startTime&maxResults=20`,{
+    headers:{Authorization:`Bearer ${gcToken}`}
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    gcEvents=data.items||[];
+    renderGCalEvents();
+    document.getElementById('m4').textContent=gcEvents.length;
+    document.getElementById('ls').textContent=new Date().toLocaleString('es-CO');
+    notify('Google Calendar sincronizado — '+gcEvents.length+' eventos');
+  })
+  .catch(()=>notify('Error al cargar eventos. Intenta reconectar.'));
+}
+
+function renderGCalEvents(){
+  const html=gcEvents.length?gcEvents.map(e=>{
+    const start=e.start.dateTime||e.start.date;
+    const fecha=start.split('T')[0];
+    const hora=start.includes('T')?start.split('T')[1].substring(0,5):'Todo el día';
+    const color=e.colorId?'#E24B4A':'#185FA5';
+    return `<div class="gcal-event-item">
+      <div style="width:9px;height:9px;border-radius:50%;background:${color};margin-top:4px;flex-shrink:0"></div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:var(--tx)">${e.summary||'Sin título'}</div>
+        <div style="font-size:11px;color:var(--tx2);margin-top:2px">${fecha} · ${hora}</div>
+      </div>
+      <a href="${e.htmlLink}" target="_blank" class="btn gc" style="padding:4px 8px;font-size:11px"><i class="ti ti-external-link"></i></a>
+    </div>`;
+  }).join(''):'<div class="es">No hay eventos próximos en Google Calendar</div>';
+
+  const el1=document.getElementById('gcal-events-list');
+  const el2=document.getElementById('gcal-cal-list');
+  if(el1)el1.innerHTML=html;
+  if(el2)el2.innerHTML=html;
+}
+
+// ── DATOS ────────────────────────────────────────────────────
+const MO=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DA=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const ACC={google:{name:'Gmail',email:'mbogotdurn@gmail.com',color:'#185FA5',bg:'#E6F1FB',icon:'ti-brand-google'},outlook:{name:'Outlook',email:'miguel_bogota@hotmail.com',color:'#3C3489',bg:'#EEEDFE',icon:'ti-brand-office'},zimbra:{name:'Zimbra',email:'miguel.bogota@armada.mil.co',color:'#0F6E56',bg:'#E1F5EE',icon:'ti-mail'}};
+
+let cur=new Date(2026,5,1),sel=21,tid=5,eid=5,aid=4,rst='';
+
+function ls(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+
+let tareas=ls('jd_t',[
+  {id:1,name:'Preparar informe trimestral',desc:'',prior:'alta',fecha:'2026-06-25',prog:65,done:false},
+  {id:2,name:'Reunión de coordinación',desc:'',prior:'media',fecha:'2026-06-22',prog:100,done:true},
+  {id:3,name:'Actualizar documentación operativa',desc:'',prior:'baja',fecha:'2026-06-30',prog:30,done:false},
+  {id:4,name:'Revisión de presupuesto',desc:'',prior:'alta',fecha:'2026-06-28',prog:10,done:false}
+]);
+let eventos=ls('jd_e',[
+  {id:1,title:'Reunión diaria',fecha:'2026-06-21',hora:'09:00',cal:'google',notes:''},
+  {id:2,title:'Almuerzo con equipo',fecha:'2026-06-21',hora:'12:30',cal:'outlook',notes:''},
+  {id:3,title:'Entrega de informe',fecha:'2026-06-25',hora:'16:00',cal:'zimbra',notes:''},
+  {id:4,title:'Capacitación institucional',fecha:'2026-06-23',hora:'08:00',cal:'google',notes:''}
+]);
+let alarmas=ls('jd_a',[
+  {id:1,title:'Reunión diaria',fecha:'2026-06-21',hora:'08:45',rep:'diario',on:true},
+  {id:2,title:'Entrega de informe',fecha:'2026-06-25',hora:'15:00',rep:'no',on:true},
+  {id:3,title:'Pago nómina',fecha:'2026-06-30',hora:'10:00',rep:'mes',on:false}
+]);
+
+function gcUrl(e){
+  const f=e.fecha.replace(/-/g,'');
+  const[h,m]=(e.hora||'09:00').split(':');
+  const he=String((parseInt(h)+1)%24).padStart(2,'0');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${f}T${h}${m}00/${f}T${he}${m}00&details=${encodeURIComponent(e.notes||'Creado desde JDAMIL BNL01')}`;
+}
+function calColor(c){return ACC[c]?ACC[c].color:'#888'}
+
+// SETUP
+function chkSetup(){
+  if(!ls('jd_g',null)||!ls('jd_o',null)||!ls('jd_z',null)){
+    document.getElementById('sw').style.display='flex';
+    showStep('google');
+  }
+}
+function showStep(n){document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));document.getElementById('step-'+n).classList.add('on');}
+function swNext(c){const pw=document.getElementById('pw-'+c).value.trim();if(!pw){notify('Ingresa la contraseña');return;}sv('jd_'+c[0],btoa(pw));if(c==='google')showStep('outlook');else if(c==='outlook')showStep('zimbra');}
+function swBack(to){showStep(to);}
+function swFinish(){const pw=document.getElementById('pw-zimbra').value.trim();if(!pw){notify('Ingresa la contraseña de Zimbra');return;}sv('jd_z',btoa(pw));document.getElementById('sw').style.display='none';notify('¡Cuentas configuradas!');}
+
+function openReset(type){
+  rst=type;const a=ACC[type];
+  document.getElementById('rst-t').textContent='Cambiar contraseña — '+a.name;
+  document.getElementById('rst-box').innerHTML=`<div style="background:${a.bg};border-radius:var(--r);padding:11px 14px;display:flex;align-items:center;gap:10px"><i class="ti ${a.icon}" style="color:${a.color};font-size:20px"></i><div><div style="font-size:13px;font-weight:600;color:${a.color}">${a.name}</div><div style="font-size:11px;color:${a.color};opacity:.8">${a.email}</div></div></div>`;
+  document.getElementById('rst-pw').value='';openM('reset');
+}
+function saveRst(){const pw=document.getElementById('rst-pw').value.trim();if(!pw){alert('Ingresa la contraseña');return;}sv('jd_'+rst[0],btoa(pw));closeM('reset');notify('Contraseña actualizada');}
+
+// NAV
+function showP(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');el.classList.add('on');
+  const T={dashboard:'Dashboard',tareas:'Tareas',calendario:'Calendario',alarmas:'Alarmas',conexiones:'Conexiones',config:'Configuración'};
+  document.getElementById('tbt').textContent=T[id];
+  if(id==='dashboard')rDash();if(id==='tareas')rTareas();if(id==='calendario')rCal();if(id==='alarmas')rAlarmas();
+  document.getElementById('sb').classList.remove('open');
+}
+
+function rDash(){
+  const tot=tareas.length,comp=tareas.filter(t=>t.done).length;
+  document.getElementById('m1').textContent=tot;document.getElementById('m2').textContent=tot-comp;document.getElementById('m3').textContent=comp;
+  document.getElementById('m4').textContent=gcEvents.length;
+  document.getElementById('dt').innerHTML=tareas.slice(0,5).map(t=>`
+    <div class="tr"><div class="chk ${t.done?'dn':''}" onclick="togT(${t.id})">${t.done?'<i class="ti ti-check" style="font-size:11px;color:#fff"></i>':''}</div>
+    <span class="tn ${t.done?'dn':''}">${t.name}</span><span class="badge ${t.prior}">${t.prior}</span></div>`).join('')||'<div class="es">Sin tareas</div>';
+  document.getElementById('dp').innerHTML=tareas.map(t=>`
+    <div class="pr"><span style="font-size:13px;color:var(--tx);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</span>
+    <div class="pb" style="width:90px"><div class="pf" style="width:${t.prog}%"></div></div>
+    <span style="font-size:12px;color:var(--tx2);min-width:34px;text-align:right">${t.prog}%</span></div>`).join('');
+  if(gcEvents.length)renderGCalEvents();
+}
+
+function rTareas(){
+  document.getElementById('tl').innerHTML=tareas.map(t=>`
+    <div class="tr"><div class="chk ${t.done?'dn':''}" onclick="togT(${t.id})">${t.done?'<i class="ti ti-check" style="font-size:11px;color:#fff"></i>':''}</div>
+    <div style="flex:1;min-width:0"><div class="tn ${t.done?'dn':''}">${t.name}</div>${t.fecha?`<div style="font-size:11px;color:var(--tx3)">Límite: ${t.fecha}</div>`:''}</div>
+    <span class="badge ${t.prior}">${t.prior}</span>
+    <div style="display:flex;align-items:center;gap:6px"><div class="pb" style="width:60px"><div class="pf" style="width:${t.prog}%"></div></div>
+    <span style="font-size:11px;color:var(--tx2);min-width:28px">${t.prog}%</span>
+    <input type="range" min="0" max="100" step="5" value="${t.prog}" style="width:64px" oninput="updP(${t.id},this.value)" /></div>
+    <button class="btn del" onclick="delI('tarea',${t.id})" style="padding:5px 8px"><i class="ti ti-trash"></i></button></div>`).join('')||'<div class="es">Sin tareas</div>';
+}
+
+function rCal(){
+  const y=cur.getFullYear(),m=cur.getMonth();
+  document.getElementById('cml').textContent=`${MO[m]} ${y}`;
+  const f=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
+  const evD=new Set(eventos.filter(e=>e.fecha.startsWith(`${y}-${String(m+1).padStart(2,'0')}`)).map(e=>parseInt(e.fecha.split('-')[2])));
+  let h=DA.map(d=>`<div class="cdn">${d}</div>`).join('');
+  for(let i=0;i<f;i++)h+=`<div></div>`;
+  for(let d=1;d<=dim;d++){const iT=d===21&&m===5&&y===2026,iS=d===sel&&!iT,hE=evD.has(d);h+=`<div class="cd ${iT?'tod':''} ${iS?'sel':''} ${hE?'hev':''}" onclick="selD(${d})">${d}</div>`;}
+  document.getElementById('cg').innerHTML=h;rDayEv();rAllEv();
+  if(gcEvents.length)renderGCalEvents();
+}
+function selD(d){sel=d;rDayEv();}
+function chM(d){cur.setMonth(cur.getMonth()+d);rCal();}
+
+function rDayEv(){
+  const y=cur.getFullYear(),m=cur.getMonth();
+  const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(sel).padStart(2,'0')}`;
+  const evs=eventos.filter(e=>e.fecha===ds);
+  document.getElementById('dev').innerHTML=evs.length?evs.map(e=>`
+    <div class="er"><div class="ed" style="background:${calColor(e.cal)}"></div>
+    <div style="flex:1"><div class="et">${e.title}</div><div class="em">${e.hora} <span class="badge ${e.cal}">${e.cal}</span></div></div>
+    <a href="${gcUrl(e)}" target="_blank" class="btn gc" style="padding:5px 9px" title="Abrir en Google Calendar"><i class="ti ti-brand-google"></i></a>
+    <button class="btn del" onclick="delI('evento',${e.id})" style="padding:5px 8px"><i class="ti ti-trash"></i></button></div>`).join(''):'<div class="es">Sin eventos este día</div>';
+}
+
+function rAllEv(){
+  document.getElementById('aev').innerHTML=[...eventos].sort((a,b)=>a.fecha.localeCompare(b.fecha)).map(e=>`
+    <div class="er"><div class="ed" style="background:${calColor(e.cal)}"></div>
+    <div style="flex:1"><div class="et">${e.title}</div><div class="em">${e.fecha} · ${e.hora} <span class="badge ${e.cal}">${e.cal}</span></div></div>
+    <a href="${gcUrl(e)}" target="_blank" class="btn gc" style="padding:5px 9px" title="Abrir en Google Calendar"><i class="ti ti-brand-google"></i></a>
+    <button class="btn del" onclick="delI('evento',${e.id})" style="padding:5px 8px"><i class="ti ti-trash"></i></button></div>`).join('')||'<div class="es">Sin eventos locales</div>';
+}
+
+function rAlarmas(){
+  document.getElementById('al').innerHTML=alarmas.map(a=>`
+    <div class="ar"><div style="min-width:52px"><div style="font-size:15px;font-weight:700;color:var(--tx)">${a.hora}</div><div style="font-size:10px;color:var(--tx3)">${a.fecha}</div></div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--tx)">${a.title}</div><div style="font-size:11px;color:var(--tx2)">${a.rep==='no'?'Sin repetición':'Repetir: '+a.rep}</div></div>
+    <button class="tog ${a.on?'on':''}" onclick="togA(${a.id},this)"></button>
+    <button class="btn del" onclick="delI('alarma',${a.id})" style="padding:5px 8px"><i class="ti ti-trash"></i></button></div>`).join('')||'<div class="es">Sin alarmas</div>';
+}
+
+function togT(id){const t=tareas.find(t=>t.id===id);if(t){t.done=!t.done;if(t.done)t.prog=100;}sv('jd_t',tareas);rTareas();rDash();}
+function updP(id,v){const t=tareas.find(t=>t.id===id);if(t){t.prog=parseInt(v);t.done=v==='100';}sv('jd_t',tareas);rDash();}
+function delI(type,id){
+  if(type==='tarea')tareas=tareas.filter(t=>t.id!==id);
+  if(type==='evento')eventos=eventos.filter(e=>e.id!==id);
+  if(type==='alarma')alarmas=alarmas.filter(a=>a.id!==id);
+  sv('jd_'+type[0],type==='tarea'?tareas:type==='evento'?eventos:alarmas);
+  if(type==='tarea'){rTareas();rDash();}if(type==='evento'){rCal();rDash();}if(type==='alarma')rAlarmas();
+  notify('Elemento eliminado');
+}
+function togA(id,btn){const a=alarmas.find(a=>a.id===id);if(a){a.on=!a.on;btn.classList.toggle('on');}sv('jd_a',alarmas);}
+
+function openM(id){
+  document.getElementById('mw-'+id).classList.add('open');
+  const t=new Date().toISOString().split('T')[0];
+  if(id==='tarea'&&!document.getElementById('t-f').value)document.getElementById('t-f').value=t;
+  if(id==='alarma'){document.getElementById('a-f').value=t;document.getElementById('a-h').value='09:00';}
+  if(id==='evento'){document.getElementById('e-f').value=t;document.getElementById('e-h').value='09:00';}
+}
+function closeM(id){document.getElementById('mw-'+id).classList.remove('open');}
+
+function addT(){
+  const name=document.getElementById('t-n').value.trim();if(!name){alert('Ingresa el nombre');return;}
+  tareas.push({id:tid++,name,desc:document.getElementById('t-d').value,prior:document.getElementById('t-p').value,fecha:document.getElementById('t-f').value,prog:parseInt(document.getElementById('t-pr').value),done:false});
+  sv('jd_t',tareas);closeM('tarea');document.getElementById('t-n').value='';document.getElementById('t-d').value='';document.getElementById('t-pr').value=0;document.getElementById('t-pv').textContent='0';
+  rTareas();rDash();notify('Tarea agregada');
+}
+function addA(){
+  const title=document.getElementById('a-t').value.trim();if(!title){alert('Ingresa el título');return;}
+  alarmas.push({id:aid++,title,fecha:document.getElementById('a-f').value,hora:document.getElementById('a-h').value,rep:document.getElementById('a-r').value,on:true});
+  sv('jd_a',alarmas);closeM('alarma');document.getElementById('a-t').value='';rAlarmas();notify('Alarma configurada');
+}
+function addE(){
+  const title=document.getElementById('e-t').value.trim();if(!title){alert('Ingresa el título');return;}
+  const ev={id:eid++,title,fecha:document.getElementById('e-f').value,hora:document.getElementById('e-h').value,cal:document.getElementById('e-c').value,notes:document.getElementById('e-n').value};
+  eventos.push(ev);sv('jd_e',eventos);closeM('evento');document.getElementById('e-t').value='';document.getElementById('e-n').value='';
+  rCal();rDash();
+  const nev=document.getElementById('nev');
+  document.getElementById('nev-msg').textContent='"'+ev.title+'" guardado';
+  document.getElementById('nev-link').href=gcUrl(ev);
+  nev.classList.add('show');clearTimeout(nev._t);nev._t=setTimeout(()=>nev.classList.remove('show'),8000);
+}
+function sync(){if(gcToken)loadGCalEvents();else{document.getElementById('ls').textContent=new Date().toLocaleString('es-CO');notify('Conecta Google Calendar para sincronizar');}}
+function saveCfg(){sv('jd_cfg',{nombre:document.getElementById('cfg-n').value});notify('Configuración guardada');}
+function notify(msg){const n=document.getElementById('notif');document.getElementById('nm').textContent=msg;n.classList.add('show');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.remove('show'),3000);}
+
+document.querySelectorAll('.mw').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+rDash();
+chkSetup();
+</script>
+</body>
+</html>
